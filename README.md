@@ -1,0 +1,1 @@
+RISC-V, an open-source instruction set architecture (ISA), has gained significant popularity due to its simplicity and flexibility. In RISC-V pipeline design, optimizing performance while minimizing hazards, particularly control hazards, is crucial for efficient execution of instructions.
