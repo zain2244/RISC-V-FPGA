@@ -1,4 +1,5 @@
 `timescale 1ns / 1ps
+
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -51,7 +52,6 @@ always @ (posedge clk or negedge rst )
               'hF: display <= 7'b1000111;
               default: display = 7'b0000001;
         
-       
             endcase
          end
          
