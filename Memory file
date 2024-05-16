@@ -1,0 +1,11 @@
+@00000000
+0062E3B3   /* this is R_type instruction */
+0062F433
+0064A423 /* this is S_type instruction */
+FFC4A383 /* this is I_type instruction */
+00730433 /* and */
+0063E233 /* this is R_type instruction */
+008303B3 /* add */
+008364B3 /* or */
+04020413 /* addi */
+FE420AE3 /* this is beq */
