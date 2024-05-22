@@ -1,0 +1,41 @@
+set_property PACKAGE_PIN R16 [get_ports rst]
+set_property IOSTANDARD LVCMOS33 [get_ports rst]
+
+set_property PACKAGE_PIN Y11 [get_ports {display[0]}]
+set_property PACKAGE_PIN Y10 [get_ports {display[2]}]
+set_property PACKAGE_PIN AA9 [get_ports {display[3]}]
+set_property PACKAGE_PIN AB11 [get_ports {display[4]}]
+set_property PACKAGE_PIN AB10 [get_ports {display[5]}]
+set_property PACKAGE_PIN AB9 [get_ports {display[6]}]
+
+
+set_property IOSTANDARD LVCMOS33 [get_ports {display[6]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {display[5]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {display[4]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {display[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {display[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {display[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {display[0]}]
+
+set_property PACKAGE_PIN AA11 [get_ports {display[1]}]
+
+set_property IOSTANDARD LVCMOS33 [get_ports clk1_s]
+set_property PACKAGE_PIN Y9 [get_ports clk1_s]
+
+set_property PACKAGE_PIN AA8 [get_ports ssdcat]
+set_property IOSTANDARD LVCMOS33 [get_ports ssdcat]
+
+set_property PACKAGE_PIN W12 [get_ports {display_1[0]}]
+set_property PACKAGE_PIN W11 [get_ports {display_1[1]}]
+set_property PACKAGE_PIN V10 [get_ports {display_1[2]}]
+set_property PACKAGE_PIN W8 [get_ports {display_1[3]}]
+set_property PACKAGE_PIN V12 [get_ports {display_1[4]}]
+set_property PACKAGE_PIN W10 [get_ports {display_1[5]}]
+set_property PACKAGE_PIN V9 [get_ports {display_1[6]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {display_1[0]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {display_1[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {display_1[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {display_1[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {display_1[4]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {display_1[5]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {display_1[6]}]
