@@ -20,15 +20,15 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Decode_cycle(clk,clr,rst,RdW,RegWriteW,RdE,InstrD,ResultW,PCD,PCPlus4D,
-RD1E,RD2E,PCE,ImmExtE,PCPlus4E,RegWriteE,ResultWSrcE,MemWriteE,BranchE,ALUControlE,ALUSrcE,Rs1E,Rs2E,Rs1D,Rs2D,JumpE);
+module Decode_cycle(clk,clr,rst,RdW,RegWriteW,RdE,InstrD,ResultW,PCD,PCPlus4D,branch_taken,
+RD1E,RD2E,PCE,ImmExtE,PCPlus4E,RegWriteE,ResultWSrcE,MemWriteE,BranchE,ALUControlE,ALUSrcE,Rs1E,Rs2E,Rs1D,Rs2D,JumpE,pcsrc);
 
 input [31:0] InstrD,PCD,PCPlus4D,ResultW;
 input [4:0] RdW;
-input clk,rst,RegWriteW,clr;
+input clk,rst,RegWriteW,clr,branch_taken;
 output [31:0] RD1E,RD2E,PCE,ImmExtE,PCPlus4E;
 output [4:0] RdE,Rs1E,Rs2E,Rs1D,Rs2D;
-output RegWriteE,MemWriteE,BranchE,ALUSrcE,JumpE;
+output RegWriteE,MemWriteE,BranchE,ALUSrcE,JumpE,pcsrc;
 output [1:0] ResultWSrcE;
 output [2:0] ALUControlE;
 
@@ -38,7 +38,7 @@ wire [1:0] ImmSrcD_ext,ResultWSrcD;
 wire [2:0] ALUControlD;
  
 
-reg RegWriteD_reg,MemWriteD_reg,BranchD_reg,ALUSrcD_reg,JumpD_reg;
+reg RegWriteD_reg,MemWriteD_reg,BranchD_reg,ALUSrcD_reg,JumpD_reg,branch_taken_D;
 ///reg JumpD_reg;
 reg [1:0] ResultWSrcD_reg;
 reg [2:0] ALUControlD_reg;
@@ -80,7 +80,8 @@ Control_unit_top Control_unit_decode_top(
                                          .ImmSrc(ImmSrcD_ext),
                                          .RegWrite(RegWriteD),
                                          .ALUControl(ALUControlD),
-                                         .jump(JumpD)
+                                         .jump(JumpD),
+                                         .branch_taken(branch_taken)
                                          );
 
  always @( posedge clk or negedge rst )
@@ -102,6 +103,7 @@ Control_unit_top Control_unit_decode_top(
     ALUControlD_reg <= 3'b000;
    Rs1D_reg <= 5'h00;
   Rs2D_reg <= 5'h00;
+  branch_taken_D <= 1'b0;
     end
         
       else if (clr) begin
@@ -120,7 +122,8 @@ Control_unit_top Control_unit_decode_top(
           ALUControlD_reg <= 3'b000;
          Rs1D_reg <= 5'h00;
         Rs2D_reg <= 5'h00;
-          
+            
+
         end
         else if ( rst == 1'b1)
              begin
@@ -140,6 +143,8 @@ Control_unit_top Control_unit_decode_top(
                 ALUControlD_reg <= ALUControlD;
                Rs1D_reg <= InstrD[19:15];
               Rs2D_reg <= InstrD[24:20];
+              
+
                 end
 end
 
@@ -160,5 +165,6 @@ assign Rs1E = (rst == 1'b0 ) ? 5'h00 : Rs1D_reg;
 assign Rs2E = (rst == 1'b0 ) ? 5'h00 : Rs2D_reg;
 assign Rs1D = (rst == 1'b0 ) ? 5'h00 : InstrD[19:15];
 assign Rs2D = (rst == 1'b0 ) ? 5'h00 : InstrD[24:20];
+assign pcsrc =  (branch_taken & ( BranchD | JumpD ));
 
 endmodule 
