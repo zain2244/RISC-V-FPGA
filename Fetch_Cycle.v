@@ -20,10 +20,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Fetch_Cycle(clk,clear,rst,PCTargetE,PCSrcE,InstrD,PCD,PCPlus4D,EN,StallF);
+module Fetch_Cycle(clk,clear,rst,PCTargetE,PCSrcE,Pcsrc_predict,InstrD,PCD,PCPlus4D,EN,StallF);
 ////Declaring inputs and output of fetch cycle///
 input [31:0] PCTargetE;
-input PCSrcE,clk,rst,clear;
+input PCSrcE,clk,rst,clear,Pcsrc_predict;
 
 output [31:0] InstrD,PCD,PCPlus4D;
 ////Declaring internal wires of fetch cycle///
@@ -40,7 +40,7 @@ reg [31:0] PCPlus4F_reg;
 mux2_1 mux_f(
             .a(PCPlus4F),
             .b(PCTargetE),
-            .s(PCSrcE),
+            .s(Pcsrc_predict),
             .result(PC_F)
             );
             
