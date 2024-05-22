@@ -21,19 +21,23 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Display_top(clk,ResultW,rst,display);
+module Display_top(clk,ResultW,rst,display,display_1);
 
 input clk,rst;
 
 input wire [31:0] ResultW;
 
 output [6:0] display;
+output [6:0] display_1;
+
 
 hex_7_Segment display_7_segment(
                                 .clk(clk),
                                 .rst(rst),
                                 .ResultW(ResultW),
-                                .display(display)
+                                .display(display),
+                                .display_1(display_1)
+                               
                                 );
 
 endmodule

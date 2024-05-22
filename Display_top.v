@@ -21,44 +21,45 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module hex_7_Segment(clk,rst,ResultW,display);
+module hex_7_Segment(clk,rst,ResultW,display,display_1);
 
 input clk,rst;
 
 input [31:0] ResultW;
 
 output reg [6:0] display;
+output reg [6:0] display_1;
+
 
 always @ (posedge clk or negedge rst ) 
 
  if (rst ) begin
-        case(ResultW)
+        case(ResultW[3:0])
        
-              0: display <= 7'b1111110;
-              1: display <= 7'b0110000;
-              2: display <= 7'b1101101;
-              3: display <= 7'b1111001;
-              4: display <= 7'b0110011;
-              5: display <= 7'b1011011;
-              6: display <= 7'b1011111;
-              7: display <= 7'b1110000;
+              0: display <= 7'b0111111;
+              1: display <= 7'b0000110;
+              2: display <= 7'b1011011;
+              3: display <= 7'b1001111;
+              4: display <= 7'b1100110;
+              5: display <= 7'b1101101;
+              6: display <= 7'b1111101;
+              7: display <= 7'b0000111;
               8: display <= 7'b1111111;
               9: display <= 7'b1110011;
-              'hA: display <= 7'b1110111;
-              'hb: display <= 7'b0011111;
-              'hC: display <= 7'b1001110;
-              'hD: display <= 7'b0111101;
-              'hE: display <= 7'b1001111;
-              'hF: display <= 7'b1000111;
-              default: display = 7'b0000001;
-        
+              'ha: display <= 7'b1011111;
+              'hb: display <= 7'b1111100;
+              'hc: display <= 7'b0111001;
+              'hd: display <= 7'b1011110;
+              'he: display <= 7'b1111001;
+              'hf: display <= 7'b1110001;
+              default:display = 7'b1110001;
             endcase
          end
          
  else  begin
-                case(ResultW)
+                case(ResultW[3:0])
                
-                      0: display <= 7'b1100111;
+                      0: display <= 7'b1111111;
                       1: display <= 7'b1111111;
                       2: display <= 7'b1111111;
                       3: display <= 7'b1111111;
@@ -74,10 +75,67 @@ always @ (posedge clk or negedge rst )
                       'hD: display <= 7'b1111111;
                       'hE: display <= 7'b1111111;
                       'hF: display <= 7'b1111111;
-                      default: display = 7'b110111;
-                
-               
+                       default:display = 7'b1111111;
+                        
                     endcase
+                     
                  end
+    ///  always @(*) ssdcat = 1;
+     
+always @ (posedge clk or negedge rst ) 
        
+        if (rst ) begin
+               case(ResultW[7:4])
+              
+                     0: display_1 <= 7'b0111111;
+                             1: display_1 <= 7'b0000110;
+                             2: display_1 <= 7'b1011011;
+                             3: display_1 <= 7'b1001111;
+                             4: display_1 <= 7'b1100110;
+                             5: display_1 <= 7'b1101101;
+                             6: display_1 <= 7'b1111101;
+                             7: display_1 <= 7'b0000111;
+                             8: display_1 <= 7'b1111111;
+                             9: display_1 <= 7'b1110011;
+                             'ha: display_1 <= 7'b1011111;
+                             'hb: display_1 <= 7'b1111100;
+                             'hc: display_1 <= 7'b0111001;
+                             'hd: display_1 <= 7'b1011110;
+                             'he: display_1 <= 7'b1111001;
+                             'hf: display_1 <= 7'b1110001;
+                             default:display_1 = 7'b1110001;
+                      /// ssdcat = 1'b1;
+                        ///  ssdcat = 1'b1;
+          
+                      
+                          
+                   endcase
+                end
+                
+        else  begin
+                      case(ResultW[7:4])
+                      
+                             0: display_1 <= 7'b1111111;
+                             1: display_1 <= 7'b1111111;
+                             2: display_1 <= 7'b1111111;
+                             3: display_1 <= 7'b1111111;
+                             4: display_1 <= 7'b1111111;
+                             5: display_1 <= 7'b1111111;
+                             6: display_1 <= 7'b1111111;
+                             7: display_1 <= 7'b1111111;
+                             8: display_1 <= 7'b1111111;
+                             9: display_1 <= 7'b1111111;
+                             'hA: display_1 <= 7'b1111111;
+                             'hb: display_1 <= 7'b1111111;
+                             'hC: display_1 <= 7'b1111111;
+                             'hD: display_1 <= 7'b1111111;
+                             'hE: display_1 <= 7'b1111111;
+                             'hF: display_1 <= 7'b1111111;
+                             default:display_1 = 7'b1101001;
+                               
+                      
+                           endcase
+                            
+                        end
+                       
 endmodule
