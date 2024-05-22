@@ -19,7 +19,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-module Control_unit_top(Op,func3,func7,ResultSrc ,MemWrite,Branch ,AluSrc ,ImmSrc ,RegWrite,ALUControl,jump);
+module Control_unit_top(Op,func3,func7,ResultSrc ,MemWrite,Branch ,AluSrc ,ImmSrc ,RegWrite,ALUControl,jump,branch_taken);
 
 input [6:0] Op;
 input [2:0] func3;
@@ -29,6 +29,7 @@ output [2:0] ALUControl;
 output MemWrite,AluSrc,RegWrite,Branch,jump;
 output [1:0] ImmSrc;
 output [1:0] ResultSrc;
+output branch_taken;
 
 wire [1:0] ALUOp;
 
@@ -53,6 +54,11 @@ alu_decoder ALU_decoder(
                         .func7(func7),
                         .ALUControl(ALUControl)
                                    );
+ Branch_predictor branch_controler(
+                                    .op(Op),
+                                    .branch_taken(branch_taken)
+                                    
+                                    );    
                                                 
 
 endmodule
