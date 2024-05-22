@@ -20,13 +20,17 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Pipeline_top(clk,rst);
+module Pipeline_top(clk1_s,rst,display,display_1);
 
-input clk,rst;
-
+input clk1_s,rst;
+output [6:0] display;
+output [6:0] display_1;
+/// output[7:0] OLED_Display;
 /// interim wires////
 wire PCSrcE,RegWriteW,RegWriteE,MemWriteE,BranchE,ALUSrcE,RegWriteM,MemWriteM,
-StallF,StallD,FlushE,JumpE,FlushD;
+StallF,StallD,FlushE,JumpE,FlushD,branch_predict,pcsrc_predict,clk;
+
+
 
 wire [31:0] PCTargetE,InstrD,PCD,PCPlus4D,ResultW,RD1E,RD2E,
 PCE,ImmExtE,PCPlus4E,ALUResultM,WriteDataM,PCPlus4M,ReadDataW,PCPlus4W,ALUResultW;
@@ -42,6 +46,7 @@ Fetch_Cycle Fetch_top(
                     .rst(rst),
                     .PCTargetE(PCTargetE),
                     .PCSrcE(PCSrcE),
+                   .Pcsrc_predict(pcsrc_predict),
                     .InstrD(InstrD),
                     .PCD(PCD),
                     .PCPlus4D(PCPlus4D),    
@@ -76,8 +81,9 @@ Decode_cycle Decode_top(
                         .Rs1D(Rs1D),
                         .Rs2D(Rs2D),
                         .clr(FlushE),
-                        .JumpE(JumpE)
-                        
+                        .JumpE(JumpE),
+                        .pcsrc(pcsrc_predict),
+                        .branch_taken(branch_predict)
                         );
 
 Execute_Cycle Execute_top(
@@ -157,9 +163,23 @@ Hazard_unit Hazard_top(
                              .RdE(RdE),
                              .Rs1D(Rs1D),
                              .Rs2D(Rs2D),
-                             .PCSrcE(PCSrcE),
+                             .PCSrcE(pcsrc_predict),
                              .FlushD(FlushD)
                             );
+                            
+Display_top display_pipeline(
+                            .clk(clk),
+                            .rst(rst),
+                            .ResultW(ResultW),
+                            .display(display),
+                          .display_1(display_1)
+                            );
+                           
+
+ time1    pipeline_time(
+                        .clk1_s(clk1_s),
+                        .clk(clk)
+                        );
 
                             
 endmodule
