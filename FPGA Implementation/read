@@ -1,0 +1,53 @@
+FPGA implementation involves a few steps, including knowledge of FPGA, Selecting the right board and appropriate software platform, designing the RISC-V processor and its simulation, synthesizing and implementing the design, generating bitstream, and verifying its functionality. Here’s a general guide to help you get started:
+7.1	Overview of FPGA Technology
+Field Programmable Gate Arrays (FPGAs) are pre-fabricated silicon devices that can be electrically programmed after manufacturing. They consist of Configurable Logic Blocks (CLBs) for logical functions, Input/Output Blocks (IOBs) for external connection with other peripheral devices, memory blocks for data storage, routing fabric for interconnections, and clock management for timing accuracy. The whole process involves entering the design using HDL (Hardware Description Language), then synthesizing it to transform HDL into a netlist (fabric), proceeding with implementation, mapping and routing, and finally configuring it to upload the design onto the FPGA. Their reprogrammability features make FPGAs suitable for applications in signal processing, the medical field, research centers, the automobile industry, and aerospace.
+7.2	Design Flow for FPGA Implementation
+•	Select an FPGA Development Board
+Due to limited resources, we are using the ZedBoard Zynq-7000 ARM/FPGA SoC Development FPGA (Xilinx Board) for Pipeline RISC processor implementation.
+•	Set Up the FPGA Development Environment
+We Installed Xilinx Vivado Software to implement the RISC V processor's FPGA. Because we use a Xilinx FPGA board, we must use the appropriate vendor-provided tool. That’s why we can’t install Quartus or any other tool. 
+•	Design Entry
+In this process, we create a Pipeline RISC V processor using HDL (Hardware Description Language). We have already discussed it in detail.
+•	I/O Constraints Definition
+In Xilinx Vivado, an XDC (Xilinx Design Constraints) file defines design I/O constraints which specify the physical location (Pmod headers on FPGA) and Electrical characteristics (like Vcc voltage) of I/O pins. These constraints guide the synthesis, implementation, and place-and-route processes to ensure that the design meets its performance and functionality requirements.
+
+•	Synthesis Design
+Synthesis converts a high-level hardware description language (HDL) code into a gate-level netlist (a Textual representation of an electronics circuit), a logic gate-level circuit representation. This is an essential step in FPGA development, as it converts pipeline RISC-V core design into a netlist that can be programmed onto the FPGA.
+ 
+Figure 20 Synthesis HDL to gate-level netlist (circuit)
+•	Design implementation
+In the Implementation process, the netlist generated after synthesis is translated into a format that the Vivado tool can use for placement and routing. Then, in placement, the logic elements from the netlist are placed on the physical layer of the FPGA. This involves determining the exact location on the FPGA where each logical element will be situated.
+On the other hand, routing is the connection between the placed logical elements that is established, which ensures that signals can travel between them.
+ 
+Figure 21 Implemented Design
+7.3	Hardware Setup and Configuration
+After the Synthesis and Implementation process, here are just a few steps left for hardware configuration.
+•	Generate Bitstream
+This converts an implemented design (HDL) into a binary file format that can be directly programmed onto a Field-Programmable Gate Array (FPGA). This binary file, known as a bitstream file, contains configuration information that specifies how its logic elements should behave to implement the desired functionality and how the FPGA should be interconnected. Bitstream Generation is the essential step in the FPGA design flow as it allows the FPGA to perform the required tasks based on the programmed logic and connections.
+ 
+Figure 22 Bitstream in Hexadecimal number (due to limitation of online .bin file converter)
+•	Hardware Manager
+To set up the hardware manager, navigate to the open target and select “Auto Connect” to detect and connect to the FPGA board automatically. After connecting the device, right-click on it and select "Program Device.” This will load the generated bitstream onto the FPGA. 
+If the blue LED on the FPGA lights up, you successfully loaded the bitstream, which will configure the FPGA to run our processor.
+•	Hardware Implementation
+The last and most important step is how we implement it on hardware. For this, we externally connect two 7-segment displays with pmod headers of zedboard FPGA to visualize the results of implemented processor. We already discussed pin configuration in the xdc file and how display pins are configured with Pmod header ports along the clk and rst pin. To keep rst 1, we always press hold the rst configure button on the zedboard to run the processor. 
+ 
+•	Resource Utilization
+ 
+
+•	Performance Evaluation
+Here is the comparison of the resource utilization of the processor we built vs the average market processors.
+
+
+
+Comparison	Our Processor	Other Processors
+LUT	1093	1000 —1500
+LUTRAM	560	100 — 300
+FF	317	500 — 700
+IO	16	20 — 40
+BUFG	2	2 — 4
+
+
+•	On-Chip Power Consumption
+ 
+
